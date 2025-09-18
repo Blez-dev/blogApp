@@ -6,7 +6,7 @@ import 'package:blogapp/utils/theme.dart';
 import 'package:blogapp/views/custom_splash_screen.dart';
 import 'package:blogapp/views/homepage.dart';
 import 'package:blogapp/views/landingpage.dart';
-import 'package:blogapp/views/postpage.dart';
+import 'package:blogapp/views/postpage1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

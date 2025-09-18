@@ -1,10 +1,13 @@
+import 'package:blogapp/controllers/comments_controller.dart';
 import 'package:blogapp/views/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:blogapp/controllers/theme_controller.dart';
 import 'package:get/get.dart';
 
 class Postpage extends StatelessWidget {
+  // GetX controllers for theme and comments
   final ThemeController themeController = Get.find<ThemeController>();
+  final CommentsController commentsController = Get.find<CommentsController>();
 
   Postpage({super.key});
 
@@ -14,7 +17,7 @@ class Postpage extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            // Top image container (extends under curved bottom)
+            // Top section with background image
             Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height * 0.5,
@@ -23,7 +26,7 @@ class Postpage extends StatelessWidget {
                   image: AssetImage("assets/images/testl.png"),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                    Colors.black.withValues(alpha: 0.2),
+                    Colors.black.withValues(alpha: 0.2), // adds dark overlay
                     BlendMode.darken,
                   ),
                 ),
@@ -34,13 +37,13 @@ class Postpage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Top Row: Back and Trailing
+                    // Back and trailing icons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.back();
+                            Get.back(); // go back to previous screen
                           },
                           child: Image.asset(
                             "assets/images/back.png",
@@ -50,7 +53,7 @@ class Postpage extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {}, // placeholder action
                           child: Image.asset(
                             "assets/images/trailing.png",
                             width: 18,
@@ -62,7 +65,7 @@ class Postpage extends StatelessWidget {
 
                     SizedBox(height: 150),
 
-                    // Post title & author info
+                    // Title text and description
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Column(
@@ -70,7 +73,7 @@ class Postpage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Acampamento na represa:",
+                            "Travellers Details",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -79,7 +82,7 @@ class Postpage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "como se proteger!",
+                            "check them out!",
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -88,8 +91,10 @@ class Postpage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 5),
+                          // Small user info row
                           Row(
                             children: [
+                              // small circular indicator
                               Container(
                                 width: 12,
                                 height: 12,
@@ -131,7 +136,7 @@ class Postpage extends StatelessWidget {
               ),
             ),
 
-            // Bottom curved container
+            // Bottom container with curved top (list of comments)
             Align(
               alignment: Alignment.bottomCenter,
               child: ClipRRect(
@@ -142,33 +147,91 @@ class Postpage extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.55,
-                  // fills rest
+                  // Switch color depending on theme mode
                   color: themeController.isDark.value
                       ? Color.fromRGBO(21, 21, 21, 1)
                       : Color.fromRGBO(244, 244, 244, 1),
                   padding: EdgeInsets.all(16),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Here goes the content of the post. You can add multiple lines of text here. This container will expand to fill the remaining screen. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Poppins",
-                              color: themeController.isDark.value
-                                  ? Color.fromRGBO(244, 244, 244, 1)
-                                  : Color.fromRGBO(54, 54, 54, 1),
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      // get each comment from the list
+                      final comments = commentsController.commentsList[index];
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: themeController.isDark.value
+                              ? Color.fromRGBO(21, 21, 21, 1)
+                              : Color.fromRGBO(255, 255, 255, 1),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
                             ),
+                          ],
+                        ),
+                        child: InkWell(
+                          onTap: () {}, // handle on tap if needed
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(width: 10),
+                              // comment details
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Commenter's full name
+                                    Text(
+                                      "Full Name:   ${comments.name}",
+                                      style: TextStyle(
+                                        color: themeController.isDark.value
+                                            ? Color.fromRGBO(244, 244, 244, 1)
+                                            : Color.fromRGBO(34, 34, 34, 1),
+                                      ),
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
+                                    ),
+
+                                    SizedBox(height: 10),
+
+                                    // Commenter's email
+                                    Text(
+                                      "Email:   ${comments.email}",
+                                      style: TextStyle(
+                                        color: themeController.isDark.value
+                                            ? Color.fromRGBO(244, 244, 244, 1)
+                                            : Color.fromRGBO(34, 34, 34, 1),
+                                      ),
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
+                                    ),
+
+                                    SizedBox(height: 10),
+
+                                    // Comment body
+                                    Text(
+                                      "Body:   ${comments.body}",
+                                      style: TextStyle(
+                                        color: themeController.isDark.value
+                                            ? Color.fromRGBO(244, 244, 244, 1)
+                                            : Color.fromRGBO(34, 34, 34, 1),
+                                        fontFamily: "Poppins",
+                                      ),
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 20),
-                          // Add more texts or widgets as needed
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => SizedBox(height: 30), // spacing between items
+                    itemCount: 50, // limit to 50 comments
                   ),
                 ),
               ),

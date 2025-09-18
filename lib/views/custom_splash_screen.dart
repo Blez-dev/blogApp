@@ -8,10 +8,18 @@ class CustomSplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Using AnimatedSplashScreen to display an intro animation
     return AnimatedSplashScreen(
+      // Lottie animation asset for splash screen
       splash: Center(child: LottieBuilder.asset("assets/images/splash.json")),
+
+      // After splash, navigate to the LandingPage
       nextScreen: const LandingPage(),
+
+      // Size of the splash animation
       splashIconSize: 200,
+
+      // Background color for the splash screen
       backgroundColor: Colors.black,
     );
   }

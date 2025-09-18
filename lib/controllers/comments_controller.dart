@@ -39,7 +39,7 @@ class CommentsController extends GetxController {
       if (response.statusCode == 200) {
         final List<Comments> loadedComments = commentsFromJson(response.body);
         commentsList.assignAll(loadedComments);
-        
+
       } else {
         Get.snackbar('Error', 'Failed to load comments. Status: ${response.statusCode}');
       }
