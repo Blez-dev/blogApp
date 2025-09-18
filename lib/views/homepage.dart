@@ -1,4 +1,4 @@
-import 'package:blogapp/theme_controller.dart';
+import 'package:blogapp/controllers/theme_controller.dart';
 import 'package:blogapp/utils/text_theme.dart';
 import 'package:blogapp/views/postpage.dart';
 import 'package:flutter/material.dart';

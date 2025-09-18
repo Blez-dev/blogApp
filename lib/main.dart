@@ -1,4 +1,7 @@
-import 'package:blogapp/theme_controller.dart';
+import 'package:blogapp/controllers/comments_controller.dart';
+import 'package:blogapp/controllers/photos_controller.dart';
+import 'package:blogapp/controllers/posts_controller.dart';
+import 'package:blogapp/controllers/theme_controller.dart';
 import 'package:blogapp/utils/theme.dart';
 import 'package:blogapp/views/custom_splash_screen.dart';
 import 'package:blogapp/views/homepage.dart';
@@ -9,6 +12,9 @@ import 'package:get/get.dart';
 
 void main() {
   Get.put(ThemeController());
+  Get.put(PostsController());
+  Get.put(CommentsController());
+  Get.put(PhotosController());
   runApp(const MyApp());
 }
 

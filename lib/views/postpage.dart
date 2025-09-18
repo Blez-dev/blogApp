@@ -1,6 +1,6 @@
 import 'package:blogapp/views/homepage.dart';
 import 'package:flutter/material.dart';
-import 'package:blogapp/theme_controller.dart';
+import 'package:blogapp/controllers/theme_controller.dart';
 import 'package:get/get.dart';
 
 class Postpage extends StatelessWidget {
@@ -40,7 +40,7 @@ class Postpage extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.off(Homepage());
+                            Get.back();
                           },
                           child: Image.asset(
                             "assets/images/back.png",
